@@ -248,9 +248,9 @@ proc ::TopoTools::readlammpsdata {filename style {flags none}} {
     # apply masses. Atoms section sets a default of 1.0.
     # since the Masses section can appear before the Atoms section
     # we have to set it here after the parsing.
-    if {[llength atommasses] > 0} {
+    if {[llength $atommasses] > 0} {
         # we have type labels, but masses are indexed by numeric type
-        if {([lindex $atommasses 0] == 1) && ([llength atomlabels] > 0)} {
+        if {([lindex $atommasses 0] == 1) && ([llength $atomlabels] > 0)} {
             foreach {t m} $atommasses {d l} $atomlabels {
                 set msel [atomselect $mol "type '$l'"]
                 $msel set mass $m
