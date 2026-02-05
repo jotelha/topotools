@@ -1095,7 +1095,8 @@ proc ::TopoTools::writelammpslabelmaps {fp sel flags} {
     if {$lammps(bonds) > 0} {
         puts $fp " Bond Type Labels\n"
         set bid 1
-        foreach bt [bondinfo bondtypenames $sel type] {
+        # FIXED: Sort bond type names numerically
+        foreach bt [lsort -integer [bondinfo bondtypenames $sel type]] {
             puts $fp " $bid  $bt"
             incr bid
         }
@@ -1104,7 +1105,8 @@ proc ::TopoTools::writelammpslabelmaps {fp sel flags} {
     if {$lammps(angles) > 0} {
         puts $fp " Angle Type Labels\n"
         set aid 1
-        foreach at [angleinfo angletypenames $sel] {
+        # FIXED: Sort angle type names numerically
+        foreach at [lsort -integer [angleinfo angletypenames $sel]] {
             puts $fp " $aid  $at"
             incr aid
         }
@@ -1113,7 +1115,8 @@ proc ::TopoTools::writelammpslabelmaps {fp sel flags} {
     if {$lammps(dihedrals) > 0} {
         puts $fp " Dihedral Type Labels\n"
         set did 1
-        foreach dt [dihedralinfo dihedraltypenames $sel] {
+        # FIXED: Sort dihedral type names numerically
+        foreach dt [lsort -integer [dihedralinfo dihedraltypenames $sel]] {
             puts $fp " $did  $dt"
             incr did
         }
@@ -1122,7 +1125,8 @@ proc ::TopoTools::writelammpslabelmaps {fp sel flags} {
     if {$lammps(impropers) > 0} {
         puts $fp " Improper Type Labels\n"
         set iid 1
-        foreach it [improperinfo impropertypenames $sel] {
+        # FIXED: Sort improper type names numerically
+        foreach it [lsort -integer [improperinfo impropertypenames $sel]] {
             puts $fp " $iid  $it"
             incr iid
         }
@@ -1421,7 +1425,8 @@ proc ::TopoTools::writelammpscoeffhint {fp sel typelabels type} {
         bonds {
             puts $fp "\# Bond Coeffs\n\#"
             set bid 1
-            foreach bt [bondinfo bondtypenames $sel type] {
+            # FIXED: Sort bond type names numerically
+            foreach bt [lsort -integer [bondinfo bondtypenames $sel type]] {
                 if {$typelabels} {
                     puts $fp "\# $bt"
                 } else {
@@ -1433,7 +1438,8 @@ proc ::TopoTools::writelammpscoeffhint {fp sel typelabels type} {
         angles {
             puts $fp "\# Angle Coeffs\n\#"
             set aid 1
-            foreach at [angleinfo angletypenames $sel] {
+            # FIXED: Sort angle type names numerically
+            foreach at [lsort -integer [angleinfo angletypenames $sel]] {
                 if {$typelabels} {
                     puts $fp "\# $at"
                 } else {
@@ -1445,7 +1451,8 @@ proc ::TopoTools::writelammpscoeffhint {fp sel typelabels type} {
         dihedrals {
             puts $fp "\# Dihedral Coeffs\n\#"
             set did 1
-            foreach dt [dihedralinfo dihedraltypenames $sel] {
+            # FIXED: Sort dihedral type names numerically
+            foreach dt [lsort -integer [dihedralinfo dihedraltypenames $sel]] {
                 if {$typelabels} {
                     puts $fp "\# $dt"
                 } else {
@@ -1457,7 +1464,8 @@ proc ::TopoTools::writelammpscoeffhint {fp sel typelabels type} {
         impropers {
             puts $fp "\# Improper Coeffs\n\#"
             set iid 1
-            foreach it [improperinfo impropertypenames $sel] {
+            # FIXED: Sort improper type names numerically
+            foreach it [lsort -integer [improperinfo impropertypenames $sel]] {
                 if {$typelabels} {
                     puts $fp "\# $it"
                 } else {
