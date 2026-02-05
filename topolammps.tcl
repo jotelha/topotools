@@ -1278,7 +1278,7 @@ proc ::TopoTools::writelammpsbonds {fp sel atomidmap typelabels} {
         if {$typelabels} {
             puts $fp [format "%d %s %d %d" $bondid $t $at1 $at2]
         } else {
-            set type [lsearch -ascii $bondtypes $t]
+            set type [lsearch -integer $bondtypes $t]
 
             # go from 0-based to 1-based indexing and write out
             incr type
@@ -1309,7 +1309,7 @@ proc ::TopoTools::writelammpsangles {fp sel atomidmap typelabels} {
         if {$typelabels} {
             puts $fp [format "%d %s %d %d %d" $angleid $t $at1 $at2 $at3]
         } else {
-            set type [lsearch -ascii $angletypes $t]
+            set type [lsearch -integer $angletypes $t]
 
             # go from 0-based to 1-based indexing and write out
             incr type
@@ -1341,7 +1341,7 @@ proc ::TopoTools::writelammpsdihedrals {fp sel atomidmap typelabels} {
         if {$typelabels} {
             puts $fp [format "%d %s %d %d %d %d" $dihedralid $t $at1 $at2 $at3 $at4]
         } else {
-            set type [lsearch -ascii $dihedraltypes $t]
+            set type [lsearch -integer $dihedraltypes $t]
 
             # go from 0-based to 1-based indexing and write out
             incr type
@@ -1373,7 +1373,7 @@ proc ::TopoTools::writelammpsimpropers {fp sel atomidmap typelabels} {
         if {$typelabels} {
             puts $fp [format "%d %s %d %d %d %d" $improperid $t $at1 $at2 $at3 $at4]
         } else {
-            set type [lsearch -ascii $impropertypes $t]
+            set type [lsearch -integer $impropertypes $t]
 
             # go from 0-based to 1-based indexing and write out
             incr type

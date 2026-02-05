@@ -30,7 +30,7 @@ proc ::TopoTools::dihedralinfo {infotype sel {flag none}} {
 
         numdihedrals      { return $numdihedrals }
         numdihedraltypes  { return [array size dihedraltypes] }
-        dihedraltypenames { return [lsort -ascii [array names dihedraltypes]] }
+        dihedraltypenames { return [lsort -integer [array names dihedraltypes]] }
         getdihedrallist   { return $dihedrallist }
         default        { return "bug! shoot the programmer?"}
     }

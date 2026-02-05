@@ -37,7 +37,7 @@ proc ::TopoTools::bondinfo {infotype sel {flag none}} {
     switch $infotype {
         numbonds      { return $numbonds }
         numbondtypes  { return [array size bondtypes] }
-        bondtypenames { return [lsort -ascii [array names bondtypes]] }
+        bondtypenames { return [lsort -integer [array names bondtypes]] }
         getbondlist   { return $bidxlist }
         default       { return "bug? shoot the programmer!"}
     }

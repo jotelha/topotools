@@ -29,7 +29,7 @@ proc ::TopoTools::angleinfo {infotype sel {flag none}} {
 
         numangles      { return $numangles }
         numangletypes  { return [array size angletypes] }
-        angletypenames { return [lsort -ascii [array names angletypes]] }
+        angletypenames { return [lsort -integer [array names angletypes]] }
         getanglelist   { return $anglelist }
         default        { return "bug! shoot the programmer?"}
     }

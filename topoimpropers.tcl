@@ -30,7 +30,7 @@ proc ::TopoTools::improperinfo {infotype sel {flag none}} {
 
         numimpropers      { return $numimpropers }
         numimpropertypes  { return [array size impropertypes] }
-        impropertypenames { return [lsort -ascii [array names impropertypes]] }
+        impropertypenames { return [lsort -integer [array names impropertypes]] }
         getimproperlist   { return $improperlist }
         default        { return "bug! shoot the programmer?"}
     }
