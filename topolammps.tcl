@@ -4,6 +4,11 @@
 #
 # Copyright (c) 2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2022,2023 by Axel Kohlmeyer <akohlmey@gmail.com>
 # $Id: topolammps.tcl,v 1.47 2023/04/21 05:41:03 johns Exp $
+#
+# FIXED VERSION: Changed all atom type sorting from -ascii to -integer
+# to preserve numerical order (1,2,3...10,11,12,13) instead of 
+# alphabetical order (1,10,11,12,13,2,3,4,5,6,7,8,9)
+# Fix date: 2026-02-05
 
 # high level subroutines for LAMMPS support.
 #
@@ -883,7 +888,8 @@ proc ::TopoTools::writelammpsdata {mol filename typelabels style sel {flags none
     set lammps(angles)        [angleinfo    numangles    $sel]
     set lammps(dihedrals)     [dihedralinfo numdihedrals $sel]
     set lammps(impropers)     [improperinfo numimpropers $sel]
-    set lammps(atomtypes)     [llength [lsort -ascii -unique [$sel get {type}]]]
+    # FIXED: Changed from -ascii to -integer for numerical sorting
+    set lammps(atomtypes)     [llength [lsort -integer -unique [$sel get {type}]]]
     set lammps(bondtypes)     [bondinfo     numbondtypes     $sel]
     set lammps(angletypes)    [angleinfo    numangletypes    $sel]
     set lammps(dihedraltypes) [dihedralinfo numdihedraltypes $sel]
@@ -1074,7 +1080,8 @@ proc ::TopoTools::writelammpslabelmaps {fp sel flags} {
     array set lammps $flags
 
     if {$lammps(atomtypes) > 0} {
-        set typemap [lsort -unique -ascii [$sel get type]]
+        # FIXED: Changed from -ascii to -integer for numerical sorting
+        set typemap [lsort -unique -integer [$sel get type]]
         set typeid 1
 
         puts $fp " Atom Type Labels\n"
@@ -1129,7 +1136,8 @@ proc ::TopoTools::writelammpslabelmaps {fp sel flags} {
 proc ::TopoTools::writelammpsmasses {fp sel typelabels} {
 
     # first run the checks and build list of masses
-    set typemap  [lsort -unique -ascii [$sel get type]]
+    # FIXED: Changed from -ascii to -integer for numerical sorting
+    set typemap  [lsort -unique -integer [$sel get type]]
     set masslist {}
     set mol [$sel molid]
     set selstr [$sel text]
@@ -1166,12 +1174,14 @@ proc ::TopoTools::writelammpsatoms {fp sel style typelabels} {
     vmdcon -info "writing LAMMPS Atoms section in style '$style'."
 
     puts $fp " Atoms # $style\n"
-    set typemap [lsort -unique -ascii [$sel get type]]
+    # FIXED: Changed from -ascii to -integer for numerical sorting
+    set typemap [lsort -unique -integer [$sel get type]]
     set resmap  [lsort -unique -integer [$sel get resid]]
     set atomid 0
     foreach adat [$sel get {type resid charge x y z resname mass radius}] {
         lassign $adat type resid charge x y z resname mass radius
-        set atomtype [lsearch -sorted -ascii $typemap $type]
+        # FIXED: Changed from -ascii to -integer for numerical search
+        set atomtype [lsearch -sorted -integer $typemap $type]
         set resid    [lsearch -sorted -integer $resmap $resid]
         incr atomid
         incr atomtype
@@ -1397,7 +1407,8 @@ proc ::TopoTools::writelammpscoeffhint {fp sel typelabels type} {
         atoms {
             puts $fp "\# Pair Coeffs\n\#"
             set aid 1
-            set atlist [lsort -ascii -unique [$sel get {type}]]
+            # FIXED: Changed from -ascii to -integer for numerical sorting
+            set atlist [lsort -integer -unique [$sel get {type}]]
             foreach at $atlist {
                 if {$typelabels} {
                     puts $fp "\# $at"
